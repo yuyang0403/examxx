@@ -102,7 +102,7 @@ var create_account = {
 			$(".form-truename .form-message").text("真实姓名保持在10个字符以内");
 			return false;
 		} else {
-			var re=/((?=[\x21-\x7e]+)[^A-Za-z0-9])]/;
+			var re=/[`~!@#$\^\&*\(\)=\|\{\}':;',\[\]\.<>\/\?\~！@#￥……*（）——|\{\}【】‘；：”“'。，、？]/;
 			if(re.test(truename)){
 				$(".form-truename .form-message").text("不能包含特殊符号");
 				return false;
