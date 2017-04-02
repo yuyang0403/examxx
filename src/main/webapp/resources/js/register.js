@@ -66,13 +66,12 @@ var create_account = {
 		var result = true;
 		var check_u = this.checkUsername();
 		var check_e = this.checkEmail();
-
 		var check_p = this.checkPassword();
 		var check_cp = this.checkConfirmPassword();
 		var check_job = this.checkJob();
-
-		
-		result = check_u && check_e && check_p && check_cp && check_job;
+		var check_term=this.checkTerm();
+		var check_truename=this.checkTruename();
+		result = check_u && check_e && check_p && check_cp && check_job && check_term && check_truename;
 		return result;
 	},
 
@@ -95,7 +94,23 @@ var create_account = {
 		}
 		return true;
 	},
-
+	checkTruename : function checkTruename() {
+		var truename = $(".form-truename input").val();
+		if (truename == "") {
+			return true;
+		} else if (truename.length > 10) {
+			$(".form-truename .form-message").text("真实姓名保持在10个字符以内");
+			return false;
+		} else {
+			var re=/((?=[\x21-\x7e]+)[^A-Za-z0-9])]/;
+			if(re.test(truename)){
+				$(".form-truename .form-message").text("不能包含特殊符号");
+				return false;
+			}else 
+				return true; 
+		}
+		return true;
+	},
 	checkEmail : function checkEmail() {
 		var email = $(".form-email input").val();
 		if (email == "") {
@@ -160,10 +175,8 @@ var create_account = {
 	},
 	
 	checkTerm : function checkTerm() {
-
 		if ($('.form-confirm input[type=checkbox]').is(':checked')) {
 			return true;
-
 		} else {
 			$(".form-confirm .form-message").text("请选择");
 			return false;

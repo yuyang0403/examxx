@@ -115,7 +115,6 @@ String basePath = request.getScheme() + "://"
 											<input type="text" class="form-control" id="name">
 											<span class="form-message"></span>
 										</div>
-
 									</div>
 									<!-- trueName -->
 									<div class="form-group form-truename">
@@ -124,7 +123,6 @@ String basePath = request.getScheme() + "://"
 											<input type="text" class="form-control" id="truename">
 											<span class="form-message"></span>
 										</div>
-
 									</div>
 									<!-- Email -->
 									<div class="form-group form-email">
@@ -151,9 +149,7 @@ String basePath = request.getScheme() + "://"
 											<input type="password" class="form-control" id="password-confirm">
 											<span class="form-message"></span>
 										</div>
-
 									</div>
-									
 									<div class="form-group form-job-type">
 										<label class="control-label col-md-3">选择专业</label>
 										<div class="col-md-9">
@@ -165,9 +161,7 @@ String basePath = request.getScheme() + "://"
 											</select>
 											<span class="form-message"></span>
 										</div>
-
 									</div>
-
 									<!-- Checkbox -->
 									<div class="form-group form-confirm">
 										<div class="col-md-9 col-md-offset-3">
@@ -177,9 +171,7 @@ String basePath = request.getScheme() + "://"
 												<a> 同意本软件条款</a> </label>
 											<span class="form-message"></span>
 										</div>
-
 									</div>
-
 									<!-- Buttons -->
 									<div class="form-group">
 										<!-- Buttons -->
