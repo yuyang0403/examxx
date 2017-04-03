@@ -217,7 +217,6 @@ public class QuestionController {
 	@RequestMapping(value = "/admin/question-add", method = RequestMethod.POST)
 	public @ResponseBody
 	Message addQuestion(@RequestBody Question question) {
-
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
