@@ -1,5 +1,7 @@
 package com.extr.util.xml;
 
+import com.extr.domain.question.Question;
+import com.extr.domain.question.QuestionContent;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 

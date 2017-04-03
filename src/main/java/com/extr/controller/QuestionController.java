@@ -231,7 +231,6 @@ public class QuestionController {
 		try {
 			questionService.addQuestion(question);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			message.setResult("error");
 			message.setMessageInfo(e.getClass().getName());
 			e.printStackTrace();
@@ -273,6 +272,7 @@ public class QuestionController {
 		}
 		QuestionAdapter adapter = new QuestionAdapter(question,null,questionMap.get(questionId),strUrl);
 		String strHtml = adapter.getStringFromXML(true, false, true);
+		System.out.println(strHtml);
 		model.addAttribute("strHtml", strHtml);
 		model.addAttribute("question", question);
 		return "admin/question-preview";
