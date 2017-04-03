@@ -11,8 +11,7 @@ var create_account = {
 	bindSubmitForm : function bindSubmitForm() {
 		var form = $("form#form-change-password");
 
-		form
-				.submit(function() {
+		form.submit(function() {
 					var result = create_account.verifyInput();
 					if (result) {
 						var data = new Object();
@@ -48,7 +47,23 @@ var create_account = {
 					return false;
 				});
 	},
-
+	checkTruename : function checkTruename() {
+		var truename = $(".form-truename input").val();
+		if (truename == "") {
+			return true;
+		} else if (truename.length > 10) {
+			$(".form-truename .form-message").text("真实姓名保持在10个字符以内");
+			return false;
+		} else {
+			var re=/[`~!@#$\^\&*\(\)=\|\{\}':;',\[\]\.<>\/\?\~！@#￥……*（）——|\{\}【】‘；：”“'。，、？]/;
+			if(re.test(truename)){
+				$(".form-truename .form-message").text("不能包含特殊符号");
+				return false;
+			}else 
+				return true; 
+		}
+		return true;
+	},
 	verifyInput : function verifyInput() {
 		$(".form-message").empty();
 		var result = true;
@@ -56,8 +71,8 @@ var create_account = {
 
 		var check_job = this.checkJob();
 
-		
-		result = check_e && check_job;
+		var true_name=this.checkTruename();
+		result = check_e && check_job && true_name;
 		return result;
 	},
 

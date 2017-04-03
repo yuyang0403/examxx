@@ -317,12 +317,10 @@ public class ExamController {
 						examPaperId);
 		ExamPaper examPaper = examService.getExamPaperById(examPaperId);
 		String content = "";
-		if (examHistory != null&&examHistory.getSubmitTime()==null) {
+		if (examHistory != null&&examHistory.getSubmitTime()!=null) {
 			//content = examHistory.getContent();
-			
 			/*duration = examHistory.getDuration();
 			Date now = new Date();
-			
 			long startT = examHistory.getCreateTime().getTime();
 			long endT = 0;
 			try {
@@ -332,9 +330,7 @@ public class ExamController {
 				e.printStackTrace();
 			}
 			long minutsPass = (endT - startT) / 1000;
-			
 			duration = (int) (minutsPass >= (long)duration ? 0 : duration - minutsPass);
-			
 			if(duration == 0)*/
 			return "redirect:/home";
 		} else {
