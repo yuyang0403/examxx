@@ -325,6 +325,15 @@
 		)
 	</insert>
 	
+	<update id="updateFieldByIdList" parameterType="com.extr.domain.question.Field">
+		update et_field 
+		<set>
+			<if test="fieldName != null">field_name=#{fieldName},</if>
+			<if test="memo != null">memo=#{memo},</if>
+		</set>
+		where field_id=#{fieldId}
+	</update>
+	
 	<delete id="deleteFieldByIdList">
 		delete from et_field where field_id in
 		<foreach collection="array" open="(" close=")" index="index" item="item" separator=",">

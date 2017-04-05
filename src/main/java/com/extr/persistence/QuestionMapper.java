@@ -125,7 +125,8 @@ public interface QuestionMapper {
 	public void addKnowledgePoint(KnowledgePoint point);
 
 	public void deleteFieldByIdList(@Param("array") List<Integer> idList);
-
+	//更新题库按照主键更新
+	public void updateFieldByIdList(Field field);
 	public void deleteKnowledgePointByIdList(
 			@Param("array") List<Integer> idList);
 

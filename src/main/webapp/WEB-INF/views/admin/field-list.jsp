@@ -24,9 +24,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<link href="resources/bootstrap/css/bootstrap-huan.css" rel="stylesheet">
 		<link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="resources/css/style.css" rel="stylesheet">
-		
 		<link href="resources/css/exam.css" rel="stylesheet">
 		<link href="resources/chart/morris.css" rel="stylesheet">
+		<style>
+			.change-property{
+				cursor:pointer;
+			}
+		</style>
 	</head>
 	<body>
 		<header>
@@ -155,24 +159,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 													</c:if>
 													
 												</td>
-												<td>${item.fieldId }</td>
+												<td id="fid">${item.fieldId }</td>
 												<td>${item.fieldName }</td>
 												<td>${item.memo }</td>
 												<td>
 													<c:if test="${item.removeable }">
 														<button class="delete-btn" data-id="${item.fieldId }">删除</button>
 													</c:if>
+													<a class="change-property">修改</a>
 												</td>
 											</tr>
 										</c:forEach>
 										
 									</tbody><tfoot></tfoot>
 								</table>
+								<!-- 修改开始 -->
+								<div class="modal fade" id="change-property-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								    	<div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									        <h6 class="modal-title" id="myModalLabel">修改题库</h6>
+									     </div>
+									     <div class="modal-body">
+									     	<form id="field-edit-form">
+									     		<span id="add-update-fieldid" style="display:none;"></span>
+									     		<div class="form-line field-type" id="aq-course1">
+													<span class="form-label"><span class="warning-label">*</span>题库名：</span>
+													<input type="text" value="" class="field-name" id="field-name"/><span class="form-message"></span>
+												</div>
+											</form>
+									     </div>
+									     <div class="modal-footer">
+       										<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
+       										<button id="update-field-btn" type="button" class="btn btn-primary">确定修改</button>
+     										 </div>
+								    </div>
+								  </div>
+								</div>
+							 	</div>
+							<!-- 结束 -->
 							</div>
 							<div id="page-link-content">
 								<ul class="pagination pagination-sm">${pageStr}</ul>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -204,5 +234,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="resources/js/all.js"></script>
 		<script type="text/javascript" src="resources/js/field-list.js"></script>
+		<script>
+		//更新
+			var field_id;
+			var field_name;
+			$(".change-property").click(function(){
+				$("#change-property-modal").modal({backdrop:true,keyboard:true});
+				field_id= $(this).parent().parent().find(":eq(1)").text();
+				field_name=$(this).parent().parent().find(":eq(2)").text();
+				$("#add-update-field").text(field_id);
+				$("#field-name").val(field_name);
+			});
+			$("#update-field-btn").click(function(){
+				$.ajax({
+					type : "POST",
+					url : 'admin/update-field',
+					data : {fieldId:field_id,fieldName:field_name},
+					success : function(message, tst, jqXHR) {
+						if (!util.checkSessionOut(jqXHR))
+							return false;
+						if (message.result == "success") {
+							util.success("修改成功", function(){
+								window.location.reload();
+							});
+						} else {
+							util.error("操作失败请稍后尝试:" + message.result);
+						}
+
+					},
+					error : function(jqXHR, textStatus) {
+						util.error("操作失败请稍后尝试");
+					}
+				});
+				return false;
+			});
+			
+		</script>
 	</body>
 </html>

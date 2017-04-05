@@ -413,6 +413,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						tag.questionId = $("#add-update-questionid").text();
 						data.push(tag);
 					});
+					console.log(data);
 					$.ajax({
 						headers : {
 							'Accept' : 'application/json',

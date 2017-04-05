@@ -459,6 +459,12 @@ public class QuestionController {
 		return new Message();
 	}
 	
+	@RequestMapping(value = "/admin/update-field", method = RequestMethod.POST)
+	public @ResponseBody Message udpateField(Model model,int fieldId,String fieldName){
+		questionService.updateFieldByIdList(fieldId, fieldName, null);
+		return new Message();
+	}
+	
 	@RequestMapping(value = "/admin/delete-point-{pointId}", method = RequestMethod.GET)
 	public @ResponseBody Message deleteKnowledgePoint(Model model,@PathVariable("pointId") int pointId){
 		//TO.DO 严欢完善下

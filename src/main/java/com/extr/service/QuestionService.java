@@ -30,6 +30,13 @@ public interface QuestionService {
 	 * @return
 	 */
 	List<Field> getAllField(Page<Field> page);
+	/**
+	 * 更新题库
+	 * @param fid
+	 * @param fname
+	 * @param memo
+	 */
+	void updateFieldByIdList(int fid,String fname,String memo);
 
 	List<KnowledgePoint> getKnowledgePointByFieldId(int FieldId,Page<KnowledgePoint> page);
 

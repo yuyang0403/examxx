@@ -1,5 +1,4 @@
 $(function() {
-
 	question_list.initial();
 });
 

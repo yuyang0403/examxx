@@ -405,4 +405,20 @@ public class QuestionServiceImpl implements QuestionService {
 			throw new RuntimeException(e.getClass().getName());
 		}
 	}
+	/**
+	 * 更新题库
+	 */
+	@Override
+	@Transactional
+	public void updateFieldByIdList(int fid, String fname, String memo) {
+		Field field=new Field();
+		field.setFieldId(fid);
+		if(fname!=null&&(!fname.trim().equals(""))){
+			field.setFieldName(fname);
+		}
+		if(memo!=null&&(!memo.trim().equals(""))){
+			field.setMemo(memo);
+		}
+		questionMapper.updateFieldByIdList(field);
+	}
 }
