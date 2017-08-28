@@ -89,30 +89,30 @@ public class ExamController {
 	 * @param request
 	 * @return
 	 */
-	/*@RequestMapping(value = "/student/practice-testing", method = RequestMethod.GET)
-	public String practiceStart(Model model, HttpServletRequest request,
-			@RequestParam(value = "kp", required = false) String knowledgepoint) {
+	/*
+	 * @RequestMapping(value = "/student/practice-testing", method =
+	 * RequestMethod.GET) public String practiceStart(Model model,
+	 * HttpServletRequest request,
+	 * 
+	 * @RequestParam(value = "kp", required = false) String knowledgepoint) {
+	 * 
+	 * System.out.println(knowledgepoint);
+	 * 
+	 * String strUrl = "http://" + request.getServerName() // 服务器地址 + ":" +
+	 * request.getServerPort() + "/";
+	 * 
+	 * UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext()
+	 * .getAuthentication().getPrincipal(); List<Question> questionList =
+	 * practiceService .getQuestionListByQuestionTypeIdAndReferenceId(-1,
+	 * userInfo.getFieldId(), 20); List<String> htmlList = new
+	 * ArrayList<String>();
+	 * 
+	 * for (Question q : questionList) { htmlList.add(new QuestionAdapter(q,
+	 * null, null, strUrl) .getStringFromXML(false, false, false)); }
+	 * model.addAttribute("htmlList", htmlList); return
+	 * "student/practice-testing"; }
+	 */
 
-		System.out.println(knowledgepoint);
-
-		String strUrl = "http://" + request.getServerName() // 服务器地址
-				+ ":" + request.getServerPort() + "/";
-
-		UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		List<Question> questionList = practiceService
-				.getQuestionListByQuestionTypeIdAndReferenceId(-1,
-						userInfo.getFieldId(), 20);
-		List<String> htmlList = new ArrayList<String>();
-
-		for (Question q : questionList) {
-			htmlList.add(new QuestionAdapter(q, null, null, strUrl)
-					.getStringFromXML(false, false, false));
-		}
-		model.addAttribute("htmlList", htmlList);
-		return "student/practice-testing";
-	}*/
-	
 	@RequestMapping(value = "/student/practice-test", method = RequestMethod.GET)
 	public String practiceStartNew(Model model, HttpServletRequest request,
 			@RequestParam(value = "kp", required = false) String knowledgepoint) {
@@ -128,22 +128,24 @@ public class ExamController {
 		typeIdList.add(2);
 		typeIdList.add(3);
 		typeIdList.add(4);
-		List<QuestionQueryResult> qqrList = questionService.getQuestionQueryResultListByFieldIdList(fieldIdList,typeIdList, 20);
-		
+		List<QuestionQueryResult> qqrList = questionService
+				.getQuestionQueryResultListByFieldIdList(fieldIdList,
+						typeIdList, 20);
+
 		String fieldName = "";
-		try{
+		try {
 			fieldName = qqrList.get(0).getPointName().split(">")[1];
-		}catch(Exception e){
+		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
-		
+
 		int amount = qqrList.size();
 		StringBuilder sb = new StringBuilder();
-		for(QuestionQueryResult qqr : qqrList){
-			QuestionAdapter adapter = new QuestionAdapter(qqr,strUrl);
+		for (QuestionQueryResult qqr : qqrList) {
+			QuestionAdapter adapter = new QuestionAdapter(qqr, strUrl);
 			sb.append(adapter.getStringFromXML());
 		}
-		
+
 		model.addAttribute("questionStr", sb.toString());
 		model.addAttribute("amount", amount);
 		model.addAttribute("fieldName", "随机练习");
@@ -175,7 +177,8 @@ public class ExamController {
 		PracticePaper practicePaper = new PracticePaper();
 		practicePaper.setAnswer_sheet(Object2Xml.toXml(hm));
 		practicePaper.setName("我的练习");
-		List<QuestionQueryResult> questionList = examService.getQuestionDescribeListByIdList(idList);
+		List<QuestionQueryResult> questionList = examService
+				.getQuestionDescribeListByIdList(idList);
 
 		practicePaper.setContent(Object2Xml.toXml(questionList));
 		practicePaper.setUserId(userInfo.getUserid());
@@ -210,8 +213,9 @@ public class ExamController {
 		HashMap<Integer, QuestionQueryResult> questionMap = new HashMap<Integer, QuestionQueryResult>();
 		for (QuestionQueryResult qqr : questionList) {
 			idList.add(qqr.getQuestionId());
-			
-			QuestionAdapter adapter = new QuestionAdapter(hm.get(qqr.getQuestionId()),qqr,strUrl);
+
+			QuestionAdapter adapter = new QuestionAdapter(hm.get(qqr
+					.getQuestionId()), qqr, strUrl);
 			htmlStr.add(adapter.getReportStringFromXML());
 		}
 
@@ -310,39 +314,42 @@ public class ExamController {
 				.getAuthentication().getPrincipal();
 		String strUrl = "http://" + request.getServerName() // 服务器地址
 				+ ":" + request.getServerPort() + "/";
-//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		int duration = 0;
 		ExamHistory examHistory = examService
 				.getUserExamHistoryByUserIdAndExamPaperId(userInfo.getUserid(),
 						examPaperId);
 		ExamPaper examPaper = examService.getExamPaperById(examPaperId);
 		String content = "";
-		if (examHistory != null&&examHistory.getSubmitTime()!=null) {
-			//content = examHistory.getContent();
-			/*duration = examHistory.getDuration();
-			Date now = new Date();
-			long startT = examHistory.getCreateTime().getTime();
-			long endT = 0;
-			try {
-				endT = df.parse(df.format(now)).getTime();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			long minutsPass = (endT - startT) / 1000;
-			duration = (int) (minutsPass >= (long)duration ? 0 : duration - minutsPass);
-			if(duration == 0)*/
+		if (examHistory != null && examHistory.getSubmitTime() != null) {
+			// content = examHistory.getContent();
+			/*
+			 * duration = examHistory.getDuration(); Date now = new Date(); long
+			 * startT = examHistory.getCreateTime().getTime(); long endT = 0;
+			 * try { endT = df.parse(df.format(now)).getTime(); } catch
+			 * (ParseException e) { // TODO Auto-generated catch block
+			 * e.printStackTrace(); } long minutsPass = (endT - startT) / 1000;
+			 * duration = (int) (minutsPass >= (long)duration ? 0 : duration -
+			 * minutsPass); if(duration == 0)
+			 */
 			return "redirect:/home";
 		} else {
-			
-			content = examPaper.getContent();
-			examHistory = new ExamHistory();
-			examHistory.setContent(content);
-			examHistory.setExamPaperId(examPaperId);
-			examHistory.setUserId(userInfo.getUserid());
-			examHistory.setDuration(examPaper.getDuration());
-			examService.addUserExamHistory(examHistory);
-			
+			// 现获取，如果有就不用添加
+			ExamHistory eh = examService
+					.getUserExamHistoryByUserIdAndExamPaperId(
+							userInfo.getUserid(), examPaperId);
+			if (eh == null) {
+				content = examPaper.getContent();
+				examHistory = new ExamHistory();
+				examHistory.setContent(content);
+				examHistory.setExamPaperId(examPaperId);
+				examHistory.setUserId(userInfo.getUserid());
+				examHistory.setDuration(examPaper.getDuration());
+				examService.addUserExamHistory(examHistory);
+			} else {
+				content=eh.getContent();
+			}
+
 		}
 		duration = examPaper.getDuration();
 		@SuppressWarnings("unchecked")
@@ -371,13 +378,15 @@ public class ExamController {
 		try {
 			ExamHistory examHistory = examService
 					.getUserExamHistoryByHistId(efp.getExam_history_id());
-			List<QuestionQueryResult> questionList = Object2Xml.toBean(examHistory.getContent(), List.class);
+			List<QuestionQueryResult> questionList = Object2Xml.toBean(
+					examHistory.getContent(), List.class);
 			float pointGet = 0f;
-			for(QuestionQueryResult qqr : questionList){
-				if(qqr.getAnswer().equals(efp.getAs().get(qqr.getQuestionId()).getAnswer()))
+			for (QuestionQueryResult qqr : questionList) {
+				if (qqr.getAnswer().equals(
+						efp.getAs().get(qqr.getQuestionId()).getAnswer()))
 					pointGet += qqr.getQuestionPoint();
 			}
-			//计算得分
+			// 计算得分
 			examHistory.setPointGet(pointGet);
 			examHistory.setAnswerSheet(Object2Xml.toXml(efp.getAs()));
 			examHistory.setSubmitTime(new Date());
@@ -494,21 +503,23 @@ public class ExamController {
 		model.addAttribute("examPaperId", examPaperId);
 		return "student/paper-exam-finished";
 	}
-	
+
 	@RequestMapping(value = "student/exam-history", method = RequestMethod.GET)
-	public String userExamHistPage(Model model, HttpServletRequest request){
-		
+	public String userExamHistPage(Model model, HttpServletRequest request) {
+
 		int index = 1;
-		if(request.getParameter("page") != null)
+		if (request.getParameter("page") != null)
 			index = Integer.parseInt(request.getParameter("page"));
 		UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		Page<ExamHistory> pageModel = new Page<ExamHistory>();
-		//pageModel.setPageSize(1);
+		// pageModel.setPageSize(1);
 		pageModel.setPageNo(index);
-		List<ExamHistory> hisList = examService.getUserExamHistoryListByUserId(userInfo.getUserid(),pageModel);
+		List<ExamHistory> hisList = examService.getUserExamHistoryListByUserId(
+				userInfo.getUserid(), pageModel);
 		model.addAttribute("hisList", hisList);
-		String pageStr = PagingUtil.getPagelink(index, pageModel.getTotalPage(), "", "student/exam-his");
+		String pageStr = PagingUtil.getPagelink(index,
+				pageModel.getTotalPage(), "", "student/exam-his");
 		model.addAttribute("pageStr", pageStr);
 		return "student/exam-history";
 	}
