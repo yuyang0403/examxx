@@ -32,7 +32,7 @@ import com.extr.service.ExamService;
 import com.extr.service.QuestionService;
 import com.extr.service.UserService;
 import com.extr.util.Page;
-
+//添加注解
 @Controller
 public class BaseController {
 
